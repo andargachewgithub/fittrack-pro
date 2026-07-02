@@ -2,7 +2,9 @@ const db = require("../config/db");
 
 // LOGIN FUNCTION
 const login = (req, res) => {
-    const { email, password } = req.body;
+    console.log("LOGIN REQUEST BODY:", req.body);
+
+    const { email, password } = req.body || {};
 
     if (!email || !password) {
         return res.status(400).json({
@@ -10,7 +12,6 @@ const login = (req, res) => {
         });
     }
 
-    // Check user in database
     const sql = "SELECT * FROM employees WHERE email = ? AND password = ?";
 
     db.query(sql, [email, password], (err, result) => {
